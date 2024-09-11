@@ -23,19 +23,16 @@ const renderBoard = () => {
 
                 // Allow dragging only if it's the player's turn
                 pieceElement.draggable = playerRole === square.color;
-                //  && chess.turn() === square.color;
 
                 pieceElement.addEventListener("dragstart", (e) => {
                     if (pieceElement.draggable) {
                         draggedPiece = pieceElement;
                         sourceSquare = { row: rowIndex, col: squareIndex };
                         e.dataTransfer.setData("text/plain", "");
-                        // alert('Drag started:', sourceSquare); // Debugging line                        
                     }
                 });
 
                 pieceElement.addEventListener("dragend", () => {
-                    // console.log('Drag ended'); // Debugging line
                     draggedPiece = null;
                     sourceSquare = null;
                 });
@@ -77,10 +74,6 @@ const handleMove = (source, target) => {
         to: `${String.fromCharCode(97 + target.col)}${8 - target.row}`,
         promotion: "q", // Always promote to queen for simplicity
     };
-
-    // console.log('Emitting move:', move); // Debugging line
-
-    // socket.emit("move", move);
 
     if (playerRole) {
         socket.emit("move", move);
@@ -140,7 +133,6 @@ const getPieceUnicode = (piece) => {
     };
     
     return unicodePieces[piece.type] || "";
-    // return unicodePieces[piece.color === "w" ? piece.type.toUpperCase() : piece.type.toLowerCase()] || "";
 };
 
 // Initial rendering of the chessboard
